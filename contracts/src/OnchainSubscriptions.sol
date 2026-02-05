@@ -105,7 +105,7 @@ contract OnChainSubscriptions is IOnChainSubscriptions {
             interval: interval,
             startTime: startTime,
             endTime: endTime,
-            lastChargedAt: 0,
+            lastChargedtAt: 0,
             revoked: false
         });
 
@@ -132,8 +132,8 @@ contract OnChainSubscriptions is IOnChainSubscriptions {
         }
 
         if (
-            sub.lastChargedAt != 0 &&
-            block.timestamp < sub.lastChargedAt + sub.interval
+            sub.lastChargedtAt != 0 &&
+            block.timestamp < sub.lastChargedtAt + sub.interval
         ) {
             revert ChargeTooEarly();
         }
@@ -148,7 +148,7 @@ contract OnChainSubscriptions is IOnChainSubscriptions {
             revert TransferFailed();
         }
 
-        sub.lastChargedAt = block.timestamp;
+        sub.lastChargedtAt = block.timestamp;
 
         emit Charged(subscriptionId, sub.merchant, sub.amount, block.timestamp);
     }
@@ -160,7 +160,7 @@ contract OnChainSubscriptions is IOnChainSubscriptions {
             revert InvalidSubscription();
         }
         if(msg.sender != sub.subscriber){
-            revert NotSubscriber()
+            revert NotSubscriber();
         }
         if(sub.revoked){
             revert SubscriptionRevokedE();
